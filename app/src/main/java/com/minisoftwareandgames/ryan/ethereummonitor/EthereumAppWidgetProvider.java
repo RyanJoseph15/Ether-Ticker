@@ -22,7 +22,7 @@ public class EthereumAppWidgetProvider extends AppWidgetProvider {
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main);
-            views.setOnClickPendingIntent(R.id.settings, pendingIntent);
+            views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
