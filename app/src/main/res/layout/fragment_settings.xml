@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Exchange"
+            android:id="@+id/exchange"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/spinner_exchange"
+            android:layout_alignBottom="@+id/spinner_exchange"
+            android:gravity="center" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_exchange"
+            android:spinnerMode="dropdown"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/exchange" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Currency"
+            android:id="@+id/currency"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:layout_alignTop="@+id/spinner_currency"
+            android:layout_alignBottom="@+id/spinner_currency" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_currency"
+            android:spinnerMode="dropdown"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/currency" />
+    </RelativeLayout>
+
+</LinearLayout>

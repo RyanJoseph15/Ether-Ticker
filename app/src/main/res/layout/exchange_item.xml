@@ -2,37 +2,60 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:id="@+id/list_item"
+    android:background="#66000000"
     android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
+        android:layout_alignLeft="@+id/icon"
+        android:layout_alignRight="@+id/price">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="low"
+            android:id="@+id/low"
+            android:gravity="center_vertical|left"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="high"
+            android:id="@+id/high"
+            android:gravity="center_vertical|right"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/icon"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:src="@android:drawable/ic_dialog_info" />
+        android:layout_below="@+id/relativeLayout"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ethereum_icon_very_small" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="from"
-        android:id="@+id/from"
+        android:text="Price"
+        android:id="@+id/price"
         android:layout_alignBottom="@+id/icon"
-        android:layout_toEndOf="@+id/icon" />
+        android:layout_toEndOf="@+id/icon"
+        android:layout_alignTop="@+id/icon"
+        android:gravity="center"
+        android:textSize="@dimen/abc_text_size_display_1_material" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="->"
-        android:id="@+id/arrow"
-        android:layout_alignBottom="@+id/from"
-        android:layout_toEndOf="@+id/from" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="to"
-        android:id="@+id/to"
-        android:layout_alignTop="@+id/arrow"
-        android:layout_toEndOf="@+id/arrow" />
+        android:text="Exchange"
+        android:id="@+id/exchange"
+        android:layout_below="@+id/icon"
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/icon"
+        android:layout_alignRight="@+id/price"
+        android:gravity="right" />
 </RelativeLayout>
