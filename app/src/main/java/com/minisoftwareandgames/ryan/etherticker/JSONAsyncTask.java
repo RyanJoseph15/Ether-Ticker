@@ -117,9 +117,9 @@ public class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
 							Log.d("etherticker", base.toString());
 							Log.d("etherticker", from.toString());
 							if (from.getString("isFrozen").equals("0")) {
-								price = convert(OP.DIV, from.getString("last"), base.getString("last"));
-								low = convert(OP.DIV, from.getString("low24hr"), base.getString("last"));
-								high = convert(OP.DIV, from.getString("high24hr"), base.getString("last"));
+								price = convert(OP.DIV, base.getString("last"), from.getString("last"));
+								low = convert(OP.DIV, base.getString("low24hr"), from.getString("last"));
+								high = convert(OP.DIV, base.getString("high24hr"), from.getString("last"));
 							} else {
 								low = "0.0";
 								high = low;
