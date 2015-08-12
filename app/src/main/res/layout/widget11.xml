@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content" android:layout_height="fill_parent"
+        android:id="@+id/widget_layout"
+        android:background="#bfffffff"
+        android:gravity="center"
+        android:paddingLeft="@dimen/abc_edit_text_inset_horizontal_material"
+        android:paddingRight="@dimen/abc_edit_text_inset_horizontal_material"
+        android:layout_gravity="center">
+
+
+        <RelativeLayout
+            android:id="@+id/pricing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="high"
+                android:id="@+id/high"
+                android:gravity="center_vertical|right"
+                android:textColor="#23ca25"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/abc_text_size_body_1_material" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:id="@+id/price"
+                android:textSize="@dimen/abc_floating_window_z"
+                android:textColor="@color/primary_text_default_material_light"
+                android:maxLines="1"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="false"
+                android:layout_below="@+id/high"
+                android:layout_alignRight="@+id/high"
+                android:layout_alignLeft="@+id/high" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="low"
+                android:id="@+id/low"
+                android:gravity="center_vertical|right"
+                android:textColor="#e6242a"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentStart="false"
+                android:layout_alignLeft="@+id/price"
+                android:textSize="@dimen/abc_text_size_body_1_material"
+                android:layout_alignRight="@+id/price"
+                android:layout_below="@+id/price" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pricing">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="CURR"
+                android:id="@+id/currency"
+                android:textColor="@color/primary_text_default_material_light"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/abc_text_size_body_1_material"
+                android:gravity="right" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Exchange"
+                android:id="@+id/exchange"
+                android:textColor="@color/primary_text_default_material_light"
+                android:layout_alignParentTop="false"
+                android:textSize="@dimen/abc_text_size_body_1_material"
+                android:layout_below="@+id/currency"
+                android:layout_alignRight="@+id/currency"
+                android:layout_alignLeft="@+id/currency"
+                android:gravity="center" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:id="@+id/progressBar"/>
+
+</FrameLayout>

@@ -15,6 +15,7 @@ public class ConfigActivity extends AppCompatActivity {
 
 	public Widget widget = null;
 	public SQLiteHelper helper;
+	private Class clas = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +29,9 @@ public class ConfigActivity extends AppCompatActivity {
 					AppWidgetManager.EXTRA_APPWIDGET_ID,
 					AppWidgetManager.INVALID_APPWIDGET_ID);
 			widget = helper.getWidget(widgetId);
+			clas = (Class) extras.get("classType");
 		}
-		getSupportFragmentManager().beginTransaction().add(R.id.container, new SettingsFragment()).commit();
+		getSupportFragmentManager().beginTransaction().add(R.id.container, SettingsFragment.newInstance(clas)).commit();
 	}
 
 	@Override

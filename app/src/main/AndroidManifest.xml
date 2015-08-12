@@ -14,12 +14,21 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
-        <receiver android:name="com.minisoftwareandgames.ryan.etherticker.EtherTickerWidgetProvider">
+        <receiver android:name=".widgetproviders.EtherTickerWidgetProviderSmall"
+            android:label="small">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/widget" />
+                android:resource="@xml/widget11" />
+        </receiver>
+        <receiver android:name=".widgetproviders.EtherTickerWidgetProviderMedium"
+            android:label="large">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget12" />
         </receiver>
     </application>
 

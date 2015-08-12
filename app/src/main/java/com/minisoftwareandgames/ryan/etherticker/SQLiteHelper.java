@@ -81,7 +81,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			return new Widget(id, exchange, currency);
 		}
 		cursor.close();
-		/* if there is not a widget with matching id, create one */
+		/* if there is not a widget12 with matching id, create one */
 		Widget widget = new Widget(wId, DEFAULT_EXCHANGE, DEFAULT_CURRENCY);
 		if (addWidget(widget)) {	/* and add it */
 			return widget;	/* if successfully in DB, return it */

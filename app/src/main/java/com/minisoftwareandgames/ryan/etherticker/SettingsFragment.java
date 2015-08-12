@@ -14,14 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.minisoftwareandgames.ryan.etherticker.objects.Widget;
+import com.minisoftwareandgames.ryan.etherticker.widgetproviders.EtherTickerWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Properties;
 
 /**
  * Created by ryan on 8/11/15.
@@ -32,8 +31,14 @@ public class SettingsFragment extends Fragment {
     private Widget widget;
     private Spinner currencySpinner;
     private View view;
+    private Class clas;
 
     public SettingsFragment() {}
+    public static SettingsFragment newInstance(Class clas) {
+        SettingsFragment fragment = new SettingsFragment();
+        fragment.clas = clas;
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,7 +87,7 @@ public class SettingsFragment extends Fragment {
             }
         } else {
             /* no active widgets */
-//            Log.d("etherticker", "no widget or null helper");
+//            Log.d("etherticker", "no widget12 or null helper");
         }
 
     }
@@ -94,9 +99,9 @@ public class SettingsFragment extends Fragment {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            Intent intent = new Intent(getActivity(), EtherTickerWidgetProvider.class);
+            Intent intent = new Intent(getActivity(), clas);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), EtherTickerWidgetProvider.class));
+            int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), clas));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
             getActivity().sendBroadcast(intent);
             return true;
@@ -120,11 +125,11 @@ public class SettingsFragment extends Fragment {
             }
             helper.updateWidget(widget);
             Log.d("etherticker", "onItemSelected -> id: " + widget.id);
-            Intent intent = new Intent(getActivity(), EtherTickerWidgetProvider.class);
+            Intent intent = new Intent(getActivity(), clas);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
             // since it seems the onUpdate() is only fired on that:
-            int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), EtherTickerWidgetProvider.class));
+            int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), clas));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
             getActivity().sendBroadcast(intent);
         }
