@@ -1,4 +1,4 @@
-package com.minisoftwareandgames.ryan.ethereummonitor;
+package com.minisoftwareandgames.ryan.etherticker;
 
 import android.widget.TextView;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.minisoftwareandgames.ryan.ethereummonitor" >
+    package="com.minisoftwareandgames.ryan.etherticker" >
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.minisoftwareandgames.ryan.etherticker.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name="EthereumAppWidgetProvider">
+        <receiver android:name="com.minisoftwareandgames.ryan.etherticker.EtherTickerWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

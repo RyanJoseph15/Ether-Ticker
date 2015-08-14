@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ethereum Monitor</string>
+    <string name="app_name">Ether Ticker</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 

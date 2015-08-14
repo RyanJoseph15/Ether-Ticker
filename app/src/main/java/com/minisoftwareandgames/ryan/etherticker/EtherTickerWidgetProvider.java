@@ -1,4 +1,4 @@
-package com.minisoftwareandgames.ryan.ethereummonitor;
+package com.minisoftwareandgames.ryan.etherticker;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -26,13 +26,13 @@ import java.io.IOException;
 /**
  * Created by ryan on 8/10/15.
  */
-public class EthereumAppWidgetProvider extends AppWidgetProvider {
+public class EtherTickerWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
         Log.d("widget", "onUpdate()");
-        ComponentName widget = new ComponentName(context, EthereumAppWidgetProvider.class);
+        ComponentName widget = new ComponentName(context, EtherTickerWidgetProvider.class);
         int[] widgetIds = appWidgetManager.getAppWidgetIds(widget);
 
         for (int widgetId : widgetIds) {

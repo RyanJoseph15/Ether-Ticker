@@ -1,4 +1,4 @@
-package com.minisoftwareandgames.ryan.ethereummonitor;
+package com.minisoftwareandgames.ryan.etherticker;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.internal.widget.AdapterViewCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,11 +86,11 @@ public class SettingsFragment extends Fragment {
 //            return true;
 //        }
         if (id == R.id.action_refresh) {
-            Intent intent = new Intent(getActivity(), EthereumAppWidgetProvider.class);
+            Intent intent = new Intent(getActivity(), EtherTickerWidgetProvider.class);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
             // since it seems the onUpdate() is only fired on that:
-            int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), EthereumAppWidgetProvider.class));
+            int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), EtherTickerWidgetProvider.class));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
             getActivity().sendBroadcast(intent);
             return true;
@@ -117,11 +115,11 @@ public class SettingsFragment extends Fragment {
                     break;
             }
             editor.commit();
-            Intent intent = new Intent(getActivity(), EthereumAppWidgetProvider.class);
+            Intent intent = new Intent(getActivity(), EtherTickerWidgetProvider.class);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
             // since it seems the onUpdate() is only fired on that:
-            int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), EthereumAppWidgetProvider.class));
+            int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), EtherTickerWidgetProvider.class));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
             getActivity().sendBroadcast(intent);
         }
