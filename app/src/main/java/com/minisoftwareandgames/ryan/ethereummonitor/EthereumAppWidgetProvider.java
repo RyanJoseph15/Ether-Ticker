@@ -97,37 +97,19 @@ public class EthereumAppWidgetProvider extends AppWidgetProvider {
                                     price = ETHBTC.getString("open");
                                     break;
                                 case "HKD":
-                                    float lowETHBTC = Float.valueOf(ETHBTC.getString("low"));
-                                    float highETHBTC = Float.valueOf(ETHBTC.getString("high"));
-                                    float priceETHBTC = Float.valueOf(ETHBTC.getString("open"));
-                                    float lowBTCHKD = Float.valueOf(BTCEUR.getString("low"));
-                                    float highBTCHKD = Float.valueOf(BTCEUR.getString("high"));
-                                    float priceBTCHKD = Float.valueOf(BTCEUR.getString("open"));
-                                    low = String.valueOf((float)lowETHBTC*lowBTCHKD);
-                                    high = String.valueOf((float)highETHBTC*highBTCHKD);
-                                    price = String.valueOf((float)priceETHBTC*priceBTCHKD);
+                                    low = convert(ETHBTC.getString("low"), BTCHKD.getString("low"));
+                                    high = convert(ETHBTC.getString("high"), BTCHKD.getString("high"));
+                                    price = convert(ETHBTC.getString("open"), BTCHKD.getString("open"));
                                     break;
                                 case "EUR":
-                                    lowETHBTC = Float.valueOf(ETHBTC.getString("low"));
-                                    highETHBTC = Float.valueOf(ETHBTC.getString("high"));
-                                    priceETHBTC = Float.valueOf(ETHBTC.getString("open"));
-                                    float lowBTCEUR = Float.valueOf(BTCEUR.getString("low"));
-                                    float highBTCEUR = Float.valueOf(BTCEUR.getString("high"));
-                                    float priceBTCEUR = Float.valueOf(BTCEUR.getString("open"));
-                                    low = String.valueOf((float)lowETHBTC*lowBTCEUR);
-                                    high = String.valueOf((float)highETHBTC*highBTCEUR);
-                                    price = String.valueOf((float)priceETHBTC*priceBTCEUR);
+                                    low = convert(ETHBTC.getString("low"), BTCEUR.getString("low"));
+                                    high = convert(ETHBTC.getString("high"), BTCEUR.getString("high"));
+                                    price = convert(ETHBTC.getString("open"), BTCEUR.getString("open"));
                                     break;
                                 case "USD":
-                                    lowETHBTC = Float.valueOf(ETHBTC.getString("low"));
-                                    highETHBTC = Float.valueOf(ETHBTC.getString("high"));
-                                    priceETHBTC = Float.valueOf(ETHBTC.getString("open"));
-                                    float lowBTCUSD = Float.valueOf(BTCUSD.getString("low"));
-                                    float highBTCUSD = Float.valueOf(BTCUSD.getString("high"));
-                                    float priceBTCUSD = Float.valueOf(BTCUSD.getString("open"));
-                                    low = String.valueOf((float)lowETHBTC*lowBTCUSD);
-                                    high = String.valueOf((float)highETHBTC*highBTCUSD);
-                                    price = String.valueOf((float)priceETHBTC*priceBTCUSD);
+                                    low = convert(ETHBTC.getString("low"), BTCUSD.getString("low"));
+                                    high = convert(ETHBTC.getString("high"), BTCUSD.getString("high"));
+                                    price = convert(ETHBTC.getString("open"), BTCUSD.getString("open"));
                                     break;
                                 default:
                                     Log.i("switch (currency)", "null");
@@ -178,6 +160,10 @@ public class EthereumAppWidgetProvider extends AppWidgetProvider {
             this.views = views;
             this.context = context;
         }
+    }
+
+    private String convert(String from, String to) {
+        return String.valueOf(Float.valueOf(from)*Float.valueOf(to));
     }
 
 }
