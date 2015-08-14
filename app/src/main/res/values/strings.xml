@@ -10,6 +10,7 @@
     <string-array name="currency_array">
         <item>"BTC"</item>
         <item>"EUR"</item>
+        <item>"HKD"</item>
         <item>"USD"</item>
     </string-array>
 
