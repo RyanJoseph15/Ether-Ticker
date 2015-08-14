@@ -108,9 +108,9 @@ public class EthereumAppWidgetProvider extends AppWidgetProvider {
                                     price = String.valueOf((float)priceETHBTC*priceBTCHKD);
                                     break;
                                 case "EUR":
-                                    long lowETHBTC = Long.valueOf(ETHBTC.getString("low"));
-                                    long highETHBTC = Long.valueOf(ETHBTC.getString("high"));
-                                    long priceETHBTC = Long.valueOf(ETHBTC.getString("open"));
+                                    lowETHBTC = Long.valueOf(ETHBTC.getString("low"));
+                                    highETHBTC = Long.valueOf(ETHBTC.getString("high"));
+                                    priceETHBTC = Long.valueOf(ETHBTC.getString("open"));
                                     long lowBTCEUR = Long.valueOf(BTCEUR.getString("low"));
                                     long highBTCEUR = Long.valueOf(BTCEUR.getString("high"));
                                     long priceBTCEUR = Long.valueOf(BTCEUR.getString("open"));
