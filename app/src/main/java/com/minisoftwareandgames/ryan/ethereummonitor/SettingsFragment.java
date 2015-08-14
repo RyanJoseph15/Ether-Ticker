@@ -19,6 +19,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by ryan on 8/11/15.
  */
@@ -55,24 +58,16 @@ public class SettingsFragment extends Fragment {
         String currency = prefs.getString("currency", "BTC");
 
         Spinner exchanges = (Spinner) view.findViewById(R.id.spinner_exchange);
-//        String exchangeArray[] = getResources().getStringArray(R.array.exchange_array);
-//        int index = 0;
-//        while (exchangeArray[index].equals(currency) || index < exchangeArray.length) {
-//            index++;
-//        }
-//        exchanges.setSelection(index);
+        ArrayList<String> exchangeArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.exchange_array)));
+        exchanges.setSelection(exchangeArray.indexOf(currency));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.exchange_array, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
         exchanges.setAdapter(adapter);
         exchanges.setOnItemSelectedListener(updateListener);
 
         Spinner currencies = (Spinner) view.findViewById(R.id.spinner_currency);
-//        String currencyArray[] = getResources().getStringArray(R.array.currency_array);
-//        index = 0;
-//        while (currencyArray[index].equals(currency) || index < currencyArray.length) {
-//            index++;
-//        }
-//        currencies.setSelection(index);
+        ArrayList<String> currencyArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.currency_array)));
+        currencies.setSelection(currencyArray.indexOf(currency));
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.currency_array, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
         currencies.setAdapter(adapter);
