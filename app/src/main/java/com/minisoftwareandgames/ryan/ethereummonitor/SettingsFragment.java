@@ -64,6 +64,7 @@ public class SettingsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.exchange_array, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
         exchanges.setAdapter(adapter);
+        exchanges.setOnItemSelectedListener(updateListener);
 
         Spinner currencies = (Spinner) view.findViewById(R.id.spinner_currency);
 //        String currencyArray[] = getResources().getStringArray(R.array.currency_array);
@@ -75,6 +76,7 @@ public class SettingsFragment extends Fragment {
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.currency_array, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
         currencies.setAdapter(adapter);
+        currencies.setOnItemSelectedListener(updateListener);
     }
 
     @Override
@@ -103,17 +105,17 @@ public class SettingsFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    AdapterView.OnItemSelectedListener myListener = new AdapterView.OnItemSelectedListener() {
+    AdapterView.OnItemSelectedListener updateListener = new AdapterView.OnItemSelectedListener() {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             SharedPreferences.Editor editor = getActivity().getSharedPreferences("EtherTicker", Context.MODE_PRIVATE).edit();
             switch (parent.getId()) {
                 case R.id.spinner_exchange:
-                    editor.putString("exchange", ((Spinner) view.findViewById(R.id.spinner_exchange)).getSelectedItem().toString());
+                    editor.putString("exchange", parent.getSelectedItem().toString());
                     break;
                 case R.id.spinner_currency:
-                    editor.putString("currency", ((Spinner) view.findViewById(R.id.spinner_currency)).getSelectedItem().toString());
+                    editor.putString("currency", parent.getSelectedItem().toString());
                     break;
             }
             editor.commit();
