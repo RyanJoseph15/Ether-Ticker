@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:id="@+id/widget_layout"
-    android:background="#9affffff"
+    android:background="#bfffffff"
     android:gravity="center"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin">
+    android:paddingLeft="@dimen/abc_edit_text_inset_top_material"
+                android:paddingRight="@dimen/abc_edit_text_inset_top_material">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
             android:id="@+id/low"
             android:gravity="center_vertical|left"
             android:layout_alignParentLeft="true"
-            android:textColor="@color/primary_text_default_material_light" />
+            android:textColor="#e6242a" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
             android:id="@+id/high"
             android:gravity="center_vertical|right"
             android:layout_alignParentRight="true"
-            android:textColor="@color/primary_text_default_material_light" />
+            android:textColor="#23ca25" />
     </RelativeLayout>
 
     <ImageView
@@ -71,8 +71,9 @@
             android:text="Price"
             android:id="@+id/price"
             android:gravity="center"
-            android:textSize="@dimen/abc_text_size_headline_material"
+            android:textSize="@dimen/abc_text_size_title_material"
             android:textColor="@color/primary_text_default_material_light"
+            android:layout_alignParentLeft="false"
             />
 
         <TextView
@@ -81,11 +82,12 @@
             android:text="currency"
             android:id="@+id/currency"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/price"
             android:layout_alignTop="@+id/price"
             android:layout_alignBottom="@+id/price"
             android:gravity="center"
-            android:paddingLeft="6dp"/>
+            android:paddingLeft="6dp"
+            android:layout_toEndOf="@id/price"
+            android:textColor="@color/primary_text_default_material_light"/>
 
     </RelativeLayout>
 

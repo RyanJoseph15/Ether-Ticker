@@ -83,9 +83,9 @@ public class EthereumAppWidgetProvider extends AppWidgetProvider {
                             array = jsono.getJSONArray("tickers");
                             String currency = prefs.getString("currency", "BTC");
                             /* update views */
-                            JSONObject BTCEUR = array.getJSONObject(0);
-                            JSONObject BTCUSD = array.getJSONObject(1);
-                            JSONObject ETHBTC = array.getJSONObject(2);
+                            JSONObject ETHBTC = array.getJSONObject(3);
+                            JSONObject BTCEUR = array.getJSONObject(1);
+                            JSONObject BTCUSD = array.getJSONObject(2);
                             String high = null;
                             String low = null;
                             String price = null;
@@ -96,10 +96,26 @@ public class EthereumAppWidgetProvider extends AppWidgetProvider {
                                     price = ETHBTC.getString("open");
                                     break;
                                 case "EUR":
-
+                                    long lowETHBTC = Long.valueOf(ETHBTC.getString("low"));
+                                    long highETHBTC = Long.valueOf(ETHBTC.getString("high"));
+                                    long priceETHBTC = Long.valueOf(ETHBTC.getString("open"));
+                                    long lowBTCEUR = Long.valueOf(BTCEUR.getString("low"));
+                                    long highBTCEUR = Long.valueOf(BTCEUR.getString("high"));
+                                    long priceBTCEUR = Long.valueOf(BTCEUR.getString("open"));
+                                    low = String.valueOf((float)lowETHBTC/lowBTCEUR);
+                                    high = String.valueOf((float)highETHBTC/highBTCEUR);
+                                    price = String.valueOf((float)priceETHBTC/priceBTCEUR);
                                     break;
                                 case "USD":
-
+                                    lowETHBTC = Long.valueOf(ETHBTC.getString("low"));
+                                    highETHBTC = Long.valueOf(ETHBTC.getString("high"));
+                                    priceETHBTC = Long.valueOf(ETHBTC.getString("open"));
+                                    long lowBTCUSD = Long.valueOf(BTCUSD.getString("low"));
+                                    long highBTCUSD = Long.valueOf(BTCUSD.getString("high"));
+                                    long priceBTCUSD = Long.valueOf(BTCUSD.getString("open"));
+                                    low = String.valueOf((float)lowETHBTC/lowBTCUSD);
+                                    high = String.valueOf((float)highETHBTC/highBTCUSD);
+                                    price = String.valueOf((float)priceETHBTC/priceBTCUSD);
                                     break;
                                 default:
                                     Log.i("switch (currency)", "null");

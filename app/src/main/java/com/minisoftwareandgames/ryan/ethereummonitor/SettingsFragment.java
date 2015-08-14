@@ -50,12 +50,28 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        SharedPreferences prefs = getActivity().getSharedPreferences("EtherTicker", Context.MODE_PRIVATE);
+        String exchange = prefs.getString("exchange", "GateCoin");
+        String currency = prefs.getString("currency", "BTC");
+
         Spinner exchanges = (Spinner) view.findViewById(R.id.spinner_exchange);
+//        String exchangeArray[] = getResources().getStringArray(R.array.exchange_array);
+//        int index = 0;
+//        while (exchangeArray[index].equals(currency) || index < exchangeArray.length) {
+//            index++;
+//        }
+//        exchanges.setSelection(index);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.exchange_array, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
         exchanges.setAdapter(adapter);
 
         Spinner currencies = (Spinner) view.findViewById(R.id.spinner_currency);
+//        String currencyArray[] = getResources().getStringArray(R.array.currency_array);
+//        index = 0;
+//        while (currencyArray[index].equals(currency) || index < currencyArray.length) {
+//            index++;
+//        }
+//        currencies.setSelection(index);
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.currency_array, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
         currencies.setAdapter(adapter);
@@ -76,8 +92,8 @@ public class SettingsFragment extends Fragment {
         if (id == R.id.action_refresh) {
             Intent intent = new Intent(getActivity(), EthereumAppWidgetProvider.class);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-// Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-// since it seems the onUpdate() is only fired on that:
+            // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+            // since it seems the onUpdate() is only fired on that:
             int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), EthereumAppWidgetProvider.class));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
             getActivity().sendBroadcast(intent);
@@ -101,6 +117,13 @@ public class SettingsFragment extends Fragment {
                     break;
             }
             editor.commit();
+            Intent intent = new Intent(getActivity(), EthereumAppWidgetProvider.class);
+            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+            // since it seems the onUpdate() is only fired on that:
+            int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), EthereumAppWidgetProvider.class));
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+            getActivity().sendBroadcast(intent);
         }
 
         @Override
