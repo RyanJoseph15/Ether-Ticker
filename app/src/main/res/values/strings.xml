@@ -9,7 +9,12 @@
 
     <string-array name="currency_array">
         <item>"BTC"</item>
+        <item>"EUR"</item>
         <item>"USD"</item>
+    </string-array>
+
+    <string-array name="exchange_URL_array">
+        <item>"https://gatecoin.com/api/Public/LiveTickers"</item>
     </string-array>
 
 </resources>

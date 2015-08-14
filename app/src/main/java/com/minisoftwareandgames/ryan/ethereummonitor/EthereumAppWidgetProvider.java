@@ -3,8 +3,10 @@ package com.minisoftwareandgames.ryan.ethereummonitor;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -15,6 +17,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,25 +31,23 @@ public class EthereumAppWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-        for (int i = 0; i < appWidgetIds.length; i++) { // for each active widget
+        Log.d("widget", "onUpdate()");
+        ComponentName widget = new ComponentName(context, EthereumAppWidgetProvider.class);
+        int[] widgetIds = appWidgetManager.getAppWidgetIds(widget);
 
-            /* make sure gets updated to whichever exchange is selected in the spinner */
-            new JSONAsyncTask().execute("https://gatecoin.com/api/Public/LiveTickers");
-
-            int appWidgetId = appWidgetIds[i];
+        for (int widgetId : widgetIds) {
             Intent intent = new Intent(context, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main);
             views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
-
-            appWidgetManager.updateAppWidget(appWidgetId, views);
+            /* make sure URL gets updated to whichever exchange is selected in the spinner */
+            new JSONAsyncTask().execute(new URLandViews("https://gatecoin.com/api/Public/LiveTickers", appWidgetManager, widgetId, views, context));
+            appWidgetManager.updateAppWidget(widgetId, views);
         }
     }
 
-    class JSONAsyncTask extends AsyncTask<String, Void, JSONObject> {
-
+    class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
 
         @Override
         protected void onPreExecute() {
@@ -55,11 +56,11 @@ public class EthereumAppWidgetProvider extends AppWidgetProvider {
         }
 
         @Override
-        protected JSONObject doInBackground(String... urls) {
+        protected JSONObject doInBackground(URLandViews... urlAndviews) {
             try {
 
                 //------------------>>
-                HttpGet httppost = new HttpGet(urls[0]);
+                HttpGet httppost = new HttpGet(urlAndviews[0].URL);
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpResponse response = httpclient.execute(httppost);
 
@@ -73,6 +74,48 @@ public class EthereumAppWidgetProvider extends AppWidgetProvider {
 
                     JSONObject jsono = new JSONObject(data);
                     Log.d("response", jsono.toString());
+                    /* get options from settings */
+                    SharedPreferences prefs = urlAndviews[0].context.getSharedPreferences("EtherTicker", Context.MODE_PRIVATE);
+                    String exchange = prefs.getString("exchange", "GateCoin");
+                    JSONArray array = null;
+                    switch (exchange) {
+                        case "GateCoin":
+                            array = jsono.getJSONArray("tickers");
+                            String currency = prefs.getString("currency", "BTC");
+                            /* update views */
+                            JSONObject BTCEUR = array.getJSONObject(0);
+                            JSONObject BTCUSD = array.getJSONObject(1);
+                            JSONObject ETHBTC = array.getJSONObject(2);
+                            String high = null;
+                            String low = null;
+                            String price = null;
+                            switch (currency) {
+                                case "BTC":
+                                    low = ETHBTC.getString("low");
+                                    high = ETHBTC.getString("high");
+                                    price = ETHBTC.getString("open");
+                                    break;
+                                case "EUR":
+
+                                    break;
+                                case "USD":
+
+                                    break;
+                                default:
+                                    Log.i("switch (currency)", "null");
+                                    break;
+                            }
+                            urlAndviews[0].views.setTextViewText(R.id.low, low);
+                            urlAndviews[0].views.setTextViewText(R.id.high, high);
+                            urlAndviews[0].views.setTextViewText(R.id.price, price);
+                            urlAndviews[0].views.setTextViewText(R.id.currency, currency);
+                            urlAndviews[0].views.setTextViewText(R.id.exchange, exchange);
+                            urlAndviews[0].manager.updateAppWidget(urlAndviews[0].widgetId, urlAndviews[0].views);
+                            break;
+                        default:
+                            Log.i("switch (exchange)", "null");
+                            break;
+                    }
 
                     return jsono;
                 }
@@ -86,8 +129,25 @@ public class EthereumAppWidgetProvider extends AppWidgetProvider {
             return null;
         }
 
-        protected void onPostExecute(Boolean result) {
+        protected void onPostExecute(boolean result) {
+            /* eh */
+        }
+    }
 
+    private class URLandViews {
+        /* this class was created to pass in the views that need to be updated with the
+         * information that is returned in the async task */
+        public String URL;
+        public AppWidgetManager manager;
+        public int widgetId;
+        public RemoteViews views;
+        public Context context;
+        public URLandViews(String URL, AppWidgetManager manager, int widgetId, RemoteViews views, Context context) {
+            this.URL = URL;
+            this.manager = manager;
+            this.widgetId = widgetId;
+            this.views = views;
+            this.context = context;
         }
     }
 

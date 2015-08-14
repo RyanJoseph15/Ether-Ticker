@@ -40,18 +40,7 @@
         android:src="@drawable/ethereum_icon_very_small"
         android:layout_alignLeft="@+id/relativeLayout" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Price"
-        android:id="@+id/price"
-        android:layout_alignBottom="@+id/icon"
-        android:layout_toEndOf="@+id/icon"
-        android:layout_alignTop="@+id/icon"
-        android:gravity="center"
-        android:textSize="@dimen/abc_text_size_headline_material"
-        android:textColor="@color/primary_text_default_material_light"
-        android:layout_alignRight="@+id/relativeLayout" />
+
 
     <TextView
         android:layout_width="match_parent"
@@ -61,7 +50,43 @@
         android:layout_below="@+id/icon"
         android:layout_centerHorizontal="true"
         android:layout_alignLeft="@+id/icon"
-        android:layout_alignRight="@+id/price"
+        android:layout_alignRight="@+id/pricing"
         android:gravity="right"
         android:textColor="@color/primary_text_default_material_light" />
+
+    <RelativeLayout
+        android:id="@+id/pricing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/icon"
+        android:layout_alignBottom="@+id/icon"
+        android:layout_alignTop="@+id/icon"
+        android:layout_alignRight="@+id/relativeLayout"
+        android:gravity="center_vertical|right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price"
+            android:id="@+id/price"
+            android:gravity="center"
+            android:textSize="@dimen/abc_text_size_headline_material"
+            android:textColor="@color/primary_text_default_material_light"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="currency"
+            android:id="@+id/currency"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/price"
+            android:layout_alignTop="@+id/price"
+            android:layout_alignBottom="@+id/price"
+            android:gravity="center"
+            android:paddingLeft="6dp"/>
+
+    </RelativeLayout>
+
 </RelativeLayout>
