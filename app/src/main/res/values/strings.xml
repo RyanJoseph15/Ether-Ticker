@@ -2,4 +2,14 @@
     <string name="app_name">Ethereum Monitor</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string-array name="exchange_array">
+        <item>"GateCoin"</item>
+    </string-array>
+
+    <string-array name="currency_array">
+        <item>"BTC"</item>
+        <item>"USD"</item>
+    </string-array>
+
 </resources>
