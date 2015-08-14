@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.internal.widget.AdapterViewCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,19 +60,19 @@ public class SettingsFragment extends Fragment {
 
         Spinner exchanges = (Spinner) view.findViewById(R.id.spinner_exchange);
         ArrayList<String> exchangeArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.exchange_array)));
-        exchanges.setSelection(exchangeArray.indexOf(currency));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.exchange_array, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
         exchanges.setAdapter(adapter);
         exchanges.setOnItemSelectedListener(updateListener);
+        exchanges.setSelection(exchangeArray.indexOf(currency));
 
         Spinner currencies = (Spinner) view.findViewById(R.id.spinner_currency);
         ArrayList<String> currencyArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.currency_array)));
-        currencies.setSelection(currencyArray.indexOf(currency));
         adapter = ArrayAdapter.createFromResource(getActivity(), R.array.currency_array, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
         currencies.setAdapter(adapter);
         currencies.setOnItemSelectedListener(updateListener);
+        currencies.setSelection(currencyArray.indexOf(currency));
     }
 
     @Override
@@ -108,9 +109,11 @@ public class SettingsFragment extends Fragment {
             switch (parent.getId()) {
                 case R.id.spinner_exchange:
                     editor.putString("exchange", parent.getSelectedItem().toString());
+                    Log.d("exchange changed", parent.getSelectedItem().toString());
                     break;
                 case R.id.spinner_currency:
                     editor.putString("currency", parent.getSelectedItem().toString());
+                    Log.d("currency changed", parent.getSelectedItem().toString());
                     break;
             }
             editor.commit();
