@@ -5,17 +5,137 @@
 
     <string-array name="exchange_array">
         <item>"Gatecoin"</item>
+        <item>"Poloniex"</item>
     </string-array>
 
-    <string-array name="currency_array">
+    <string-array name="exchange_URL_array">
+        <item>"https://gatecoin.com/api/Public/LiveTickers"</item>
+        <item>"https://poloniex.com/public?command=returnTicker"</item>
+    </string-array>
+
+    <string-array name="gatecoin_currency_array">
         <item>"BTC"</item>
         <item>"EUR"</item>
         <item>"HKD"</item>
         <item>"USD"</item>
     </string-array>
 
-    <string-array name="exchange_URL_array">
-        <item>"https://gatecoin.com/api/Public/LiveTickers"</item>
+    <string-array name="poloniex_currency_array">
+        <item>"1CR"</item>
+        <item>"ABY"</item>
+        <item>"ADN"</item>
+        <item>"ARCH"</item>
+        <item>"BBR"</item>
+        <item>"BCN"</item>
+        <item>"BELA"</item>
+        <item>"BITS"</item>
+        <item>"BLK"</item>
+        <item>"BLOCK"</item>
+        <item>"BTCD"</item>
+        <item>"BTM"</item>
+        <item>"BTS"</item>
+        <item>"BURST"</item>
+        <item>"C2"</item>
+        <item>"CGA"</item>
+        <item>"CHA"</item>
+        <item>"CLAM"</item>
+        <item>"CNMT"</item>
+        <item>"CURE"</item>
+        <item>"CYC"</item>
+        <item>"DASH"</item>
+        <item>"DGB"</item>
+        <item>"DIEM"</item>
+        <item>"DOGE"</item>
+        <item>"EMC2"</item>
+        <item>"EXE"</item>
+        <item>"FIBRE"</item>
+        <item>"FLDC"</item>
+        <item>"FLO"</item>
+        <item>"FLT"</item>
+        <item>"GAP"</item>
+        <item>"GEMZ"</item>
+        <item>"GEO"</item>
+        <item>"GMC"</item>
+        <item>"GRC"</item>
+        <item>"GRS"</item>
+        <item>"HIRO"</item>
+        <item>"HUC"</item>
+        <item>"HUGE"</item>
+        <item>"HYP"</item>
+        <item>"HZ"</item>
+        <item>"JLH"</item>
+        <item>"LQD"</item>
+        <item>"LTBC"</item>
+        <item>"LTC"</item>
+        <item>"MAID"</item>
+        <item>"MCN"</item>
+        <item>"MIL"</item>
+        <item>"MINT"</item>
+        <item>"MMC"</item>
+        <item>"MMNXT"</item>
+        <item>"MRS"</item>
+        <item>"MSC"</item>
+        <item>"MYR"</item>
+        <item>"NAUT"</item>
+        <item>"NAV"</item>
+        <item>"NBT"</item>
+        <item>"NEOS"</item>
+        <item>"NMC"</item>
+        <item>"NOBL"</item>
+        <item>"NOTE"</item>
+        <item>"NOXT"</item>
+        <item>"NSR"</item>
+        <item>"NXT"</item>
+        <item>"NXTI"</item>
+        <item>"OPAL"</item>
+        <item>"PIGGY"</item>
+        <item>"PINK"</item>
+        <item>"POT"</item>
+        <item>"PPC"</item>
+        <item>"PRC"</item>
+        <item>"PTS"</item>
+        <item>"QBK"</item>
+        <item>"QORA"</item>
+        <item>"QTL"</item>
+        <item>"RBY"</item>
+        <item>"RDD"</item>
+        <item>"RIC"</item>
+        <item>"SDC"</item>
+        <item>"SILK"</item>
+        <item>"SJCX"</item>
+        <item>"STR"</item>
+        <item>"SWARM"</item>
+        <item>"SYNC"</item>
+        <item>"SYS"</item>
+        <item>"UIS"</item>
+        <item>"UNITY"</item>
+        <item>"USD"</item>
+        <item>"URO"</item>
+        <item>"VIA"</item>
+        <item>"VNL"</item>
+        <item>"VRC"</item>
+        <item>"VTC"</item>
+        <item>"WDC"</item>
+        <item>"XIA"</item>
+        <item>"XBC"</item>
+        <item>"XC"</item>
+        <item>"XCH"</item>
+        <item>"XCN"</item>
+        <item>"XCP"</item>
+        <item>"XCR"</item>
+        <item>"XDN"</item>
+        <item>"XDP"</item>
+        <item>"XEM"</item>
+        <item>"XMG"</item>
+        <item>"XMR"</item>
+        <item>"XPB"</item>
+        <item>"XPM"</item>
+        <item>"XRP"</item>
+        <item>"XST"</item>
+        <item>"XUSD"</item>
+        <item>"YACC"</item>
+        <item>"IOC"</item>
+        <item>"INDEX"</item>
     </string-array>
 
 </resources>
