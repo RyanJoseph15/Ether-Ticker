@@ -1,12 +1,8 @@
 package com.minisoftwareandgames.ryan.etherticker;
 
-import android.app.Activity;
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.RemoteViews;
 import android.widget.Spinner;
 
 import com.minisoftwareandgames.ryan.etherticker.objects.Widget;
@@ -33,6 +28,7 @@ public class SettingsFragment extends Fragment {
 
     private SQLiteHelper helper;
     private Widget widget;
+    private Spinner currencySpinner;
 
     public SettingsFragment() {}
 
@@ -76,13 +72,9 @@ public class SettingsFragment extends Fragment {
                 exchanges.setOnItemSelectedListener(updateListener);
                 exchanges.setSelection(exchangeArray.indexOf(exchange));
 
-                Spinner currencies = (Spinner) view.findViewById(R.id.spinner_currency);
-                ArrayList<String> currencyArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.currency_array)));
-                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.currency_array, R.layout.spinner_item);
-                adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
-                currencies.setAdapter(adapter);
-                currencies.setOnItemSelectedListener(updateListener);
-                currencies.setSelection(currencyArray.indexOf(currency));
+                currencySpinner = (Spinner) view.findViewById(R.id.spinner_currency);
+                changeCurrencySpinner(exchangeArray.indexOf(exchange), widget.currency);
+
             }
         } else {
             /* no active widgets */
@@ -116,11 +108,10 @@ public class SettingsFragment extends Fragment {
             switch (parent.getId()) {
                 case R.id.spinner_exchange:
                     widget.exchange = parent.getSelectedItem().toString();
-//                    Log.d("exchange changed", parent.getSelectedItem().toString());
+                    changeCurrencySpinner(parent.getSelectedItemPosition(), widget.currency);
                     break;
                 case R.id.spinner_currency:
                     widget.currency = parent.getSelectedItem().toString();
-//                    Log.d("currency changed", parent.getSelectedItem().toString());
                     break;
             }
             helper.updateWidget(widget);
@@ -140,5 +131,28 @@ public class SettingsFragment extends Fragment {
 
         }
     };
+
+    private void changeCurrencySpinner(int index, String currency) {
+        ArrayList<String> currencyArray;
+        int arrayId;
+        switch (index) {
+            default:
+            case 0:
+                arrayId = R.array.gatecoin_currency_array;
+                currencyArray = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.gatecoin_currency_array)));
+                break;
+            case 1:
+                arrayId = R.array.poloniex_currency_array;
+                currencyArray = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.poloniex_currency_array)));
+                break;
+        }
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), arrayId, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
+        currencySpinner.setAdapter(adapter);
+        currencySpinner.setOnItemSelectedListener(updateListener);
+        if (currencyArray.indexOf(currency) >= 0) {
+            currencySpinner.setSelection(currencyArray.indexOf(currency));
+        }
+    }
 
 }
