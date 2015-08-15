@@ -1,4 +1,4 @@
-package com.minisoftwareandgames.ryan.etherticker;
+package com.minisoftwareandgames.ryan.etherticker.objects;
 
 import android.widget.TextView;
 

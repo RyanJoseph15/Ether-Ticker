@@ -6,10 +6,13 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RemoteViews;
+
+import com.minisoftwareandgames.ryan.etherticker.objects.URLandViews;
+import com.minisoftwareandgames.ryan.etherticker.objects.Widget;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,23 +31,37 @@ import java.io.IOException;
  */
 public class EtherTickerWidgetProvider extends AppWidgetProvider {
 
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
-        Log.d("widget", "onUpdate()");
+        Log.d("etherticker", "onUpdate()");
         ComponentName widget = new ComponentName(context, EtherTickerWidgetProvider.class);
         int[] widgetIds = appWidgetManager.getAppWidgetIds(widget);
 
+
+
+//        Log.d("etherticker", "widgetIds.length = " + widgetIds.length);
         for (int widgetId : widgetIds) {
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, ConfigActivity.class);
+            Uri data = Uri.withAppendedPath(
+                    Uri.parse("etherticker" + "://widget/id/")
+                    ,String.valueOf(widgetId));
+            intent.setData(data);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+//            Log.d("etherticker", "Provider: " + widgetId);
+
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main);
-            views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
-            /* make sure URL gets updated to whichever exchange is selected in the spinner */
+            views.setOnClickPendingIntent(R.id.widget_layout, pIntent);
+
+            /* TODO: update URL to whichever exchange is selected in the spinner */
             new JSONAsyncTask().execute(new URLandViews("https://gatecoin.com/api/Public/LiveTickers", appWidgetManager, widgetId, views, context));
+
             appWidgetManager.updateAppWidget(widgetId, views);
         }
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
     class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
@@ -58,7 +75,6 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
         @Override
         protected JSONObject doInBackground(URLandViews... urlAndviews) {
             try {
-
                 //------------------>>
                 HttpGet httppost = new HttpGet(urlAndviews[0].URL);
                 HttpClient httpclient = new DefaultHttpClient();
@@ -73,15 +89,18 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
 
 
                     JSONObject jsono = new JSONObject(data);
-                    Log.d("response", jsono.toString());
+//                    Log.d("etherticker", "response: " + jsono.toString());
                     /* get options from settings */
-                    SharedPreferences prefs = urlAndviews[0].context.getSharedPreferences("EtherTicker", Context.MODE_PRIVATE);
-                    String exchange = prefs.getString("exchange", "GateCoin");
+//                    SharedPreferences prefs = urlAndviews[0].context.getSharedPreferences("EtherTicker", Context.MODE_PRIVATE);
+//                    String exchange = prefs.getString("exchange", "Gatecoin");
+                    Widget widget = new SQLiteHelper(urlAndviews[0].context).getWidget(urlAndviews[0].widgetId);
+                    String exchange = widget.exchange;
+                    String currency = widget.currency;
                     JSONArray array = null;
                     switch (exchange) {
-                        case "GateCoin":
+                        case "Gatecoin":
                             array = jsono.getJSONArray("tickers");
-                            String currency = prefs.getString("currency", "BTC");
+//                            String currency = prefs.getString("currency", "BTC");
                             /* update views */
                             JSONObject ETHBTC = array.getJSONObject(3);
                             JSONObject BTCEUR = array.getJSONObject(0);
@@ -90,6 +109,7 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
                             String high = null;
                             String low = null;
                             String price = null;
+                            Log.d("etherticker", "async -> currency: " + currency);
                             switch (currency) {
                                 case "BTC":
                                     low = ETHBTC.getString("low");
@@ -115,7 +135,7 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
                                     Log.i("switch (currency)", "null");
                                     break;
                             }
-                            Log.d("crunched numbers", "low: " + low + ", high: " + high + ", open: " + price + ", currency: " + currency + ", exchange: " + exchange);
+//                            Log.d("etherticker", "crunched numbers -> low: " + low + ", high: " + high + ", open: " + price + ", currency: " + currency + ", exchange: " + exchange);
                             urlAndviews[0].views.setTextViewText(R.id.low, low);
                             urlAndviews[0].views.setTextViewText(R.id.high, high);
                             urlAndviews[0].views.setTextViewText(R.id.price, price);
@@ -124,7 +144,7 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
                             urlAndviews[0].manager.updateAppWidget(urlAndviews[0].widgetId, urlAndviews[0].views);
                             break;
                         default:
-                            Log.i("switch (exchange)", "null");
+//                            Log.i("switch (exchange)", "null");
                             break;
                     }
 
@@ -143,27 +163,10 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
         protected void onPostExecute(boolean result) {
             /* eh */
         }
-    }
 
-    private class URLandViews {
-        /* this class was created to pass in the views that need to be updated with the
-         * information that is returned in the async task */
-        public String URL;
-        public AppWidgetManager manager;
-        public int widgetId;
-        public RemoteViews views;
-        public Context context;
-        public URLandViews(String URL, AppWidgetManager manager, int widgetId, RemoteViews views, Context context) {
-            this.URL = URL;
-            this.manager = manager;
-            this.widgetId = widgetId;
-            this.views = views;
-            this.context = context;
+        private String convert(String from, String to) {
+            return String.valueOf(Float.valueOf(from) * Float.valueOf(to));
         }
-    }
-
-    private String convert(String from, String to) {
-        return String.valueOf(Float.valueOf(from)*Float.valueOf(to));
     }
 
 }

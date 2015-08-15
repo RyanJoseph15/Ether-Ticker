@@ -1,5 +1,7 @@
 package com.minisoftwareandgames.ryan.etherticker;
 
+import android.app.Activity;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -16,7 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RemoteViews;
 import android.widget.Spinner;
+
+import com.minisoftwareandgames.ryan.etherticker.objects.Widget;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +30,9 @@ import java.util.Arrays;
  * Created by ryan on 8/11/15.
  */
 public class SettingsFragment extends Fragment {
+
+    private SQLiteHelper helper;
+    private Widget widget;
 
     public SettingsFragment() {}
 
@@ -43,8 +51,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_configuration, container, false);
         return view;
     }
 
@@ -52,25 +59,36 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences("EtherTicker", Context.MODE_PRIVATE);
-        String exchange = prefs.getString("exchange", "GateCoin");
-        String currency = prefs.getString("currency", "BTC");
+        helper = ((ConfigActivity) getActivity()).helper;
+        if (helper != null && helper.hasWidgets()) {
+            widget = ((ConfigActivity) getActivity()).widget;
+            if (widget != null) {
+                Log.d("etherticker", "settingFragment: " + widget.id);
+                String exchange = widget.exchange;
+                String currency = widget.currency;
+//                Log.d("etherticker", "WIDGET -> exchange: " + exchange + ", currency: " + currency);
 
-        Spinner exchanges = (Spinner) view.findViewById(R.id.spinner_exchange);
-        ArrayList<String> exchangeArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.exchange_array)));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.exchange_array, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
-        exchanges.setAdapter(adapter);
-        exchanges.setOnItemSelectedListener(updateListener);
-        exchanges.setSelection(exchangeArray.indexOf(currency));
+                Spinner exchanges = (Spinner) view.findViewById(R.id.spinner_exchange);
+                ArrayList<String> exchangeArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.exchange_array)));
+                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.exchange_array, R.layout.spinner_item);
+                adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
+                exchanges.setAdapter(adapter);
+                exchanges.setOnItemSelectedListener(updateListener);
+                exchanges.setSelection(exchangeArray.indexOf(exchange));
 
-        Spinner currencies = (Spinner) view.findViewById(R.id.spinner_currency);
-        ArrayList<String> currencyArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.currency_array)));
-        adapter = ArrayAdapter.createFromResource(getActivity(), R.array.currency_array, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
-        currencies.setAdapter(adapter);
-        currencies.setOnItemSelectedListener(updateListener);
-        currencies.setSelection(currencyArray.indexOf(currency));
+                Spinner currencies = (Spinner) view.findViewById(R.id.spinner_currency);
+                ArrayList<String> currencyArray = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.currency_array)));
+                adapter = ArrayAdapter.createFromResource(getActivity(), R.array.currency_array, R.layout.spinner_item);
+                adapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
+                currencies.setAdapter(adapter);
+                currencies.setOnItemSelectedListener(updateListener);
+                currencies.setSelection(currencyArray.indexOf(currency));
+            }
+        } else {
+            /* no active widgets */
+//            Log.d("etherticker", "no widget or null helper");
+        }
+
     }
 
     @Override
@@ -79,17 +97,9 @@ public class SettingsFragment extends Fragment {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container, new SettingsFragment(), "settings").addToBackStack(null).commit();
-//            return true;
-//        }
         if (id == R.id.action_refresh) {
             Intent intent = new Intent(getActivity(), EtherTickerWidgetProvider.class);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-            // since it seems the onUpdate() is only fired on that:
             int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), EtherTickerWidgetProvider.class));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
             getActivity().sendBroadcast(intent);
@@ -103,18 +113,18 @@ public class SettingsFragment extends Fragment {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            SharedPreferences.Editor editor = getActivity().getSharedPreferences("EtherTicker", Context.MODE_PRIVATE).edit();
             switch (parent.getId()) {
                 case R.id.spinner_exchange:
-                    editor.putString("exchange", parent.getSelectedItem().toString());
-                    Log.d("exchange changed", parent.getSelectedItem().toString());
+                    widget.exchange = parent.getSelectedItem().toString();
+//                    Log.d("exchange changed", parent.getSelectedItem().toString());
                     break;
                 case R.id.spinner_currency:
-                    editor.putString("currency", parent.getSelectedItem().toString());
-                    Log.d("currency changed", parent.getSelectedItem().toString());
+                    widget.currency = parent.getSelectedItem().toString();
+//                    Log.d("currency changed", parent.getSelectedItem().toString());
                     break;
             }
-            editor.commit();
+            helper.updateWidget(widget);
+            Log.d("etherticker", "onItemSelected -> id: " + widget.id);
             Intent intent = new Intent(getActivity(), EtherTickerWidgetProvider.class);
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,

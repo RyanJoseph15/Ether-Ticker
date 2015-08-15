@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+                android:gravity="top">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Exchange"
+            android:id="@+id/exchange"
+            android:layout_alignParentLeft="true"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:gravity="center_vertical|left"/>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_exchange"
+            android:spinnerMode="dropdown"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/exchange"
+            android:layout_alignTop="@+id/exchange"
+            android:layout_alignBottom="@+id/exchange"
+            android:padding="@dimen/activity_horizontal_margin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Currency"
+            android:id="@+id/currency"
+            android:layout_alignParentLeft="true"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:layout_below="@+id/exchange"
+            android:layout_alignRight="@+id/exchange"
+            android:gravity="center_vertical|left"/>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_currency"
+            android:spinnerMode="dropdown"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/currency"
+            android:layout_alignTop="@+id/currency"
+            android:layout_alignBottom="@+id/currency"
+            android:padding="@dimen/activity_horizontal_margin"/>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/configurebox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:id="@+id/background"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/background_material_light"
+            android:layout_alignTop="@+id/okay"
+            android:layout_alignBottom="@+id/okay"/>
+
+        <View
+            android:id="@+id/horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/background_floating_material_dark"
+            android:layout_alignTop="@+id/okay"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="cancel"
+            android:id="@+id/cancel"
+            android:layout_toLeftOf="@+id/vertical"
+            android:gravity="center"
+            android:padding="@dimen/activity_horizontal_margin"/>
+
+        <View
+            android:id="@+id/vertical"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@color/background_floating_material_dark"
+            android:layout_alignTop="@+id/okay"
+            android:layout_alignBottom="@+id/okay"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="add"
+            android:id="@+id/okay"
+            android:layout_toRightOf="@+id/vertical"
+            android:gravity="center"
+            android:padding="@dimen/activity_horizontal_margin"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

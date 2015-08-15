@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Ethereum-Monitor.iml" filepath="$PROJECT_DIR$/Ethereum-Monitor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EtherTicker.iml" filepath="$PROJECT_DIR$/EtherTicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
