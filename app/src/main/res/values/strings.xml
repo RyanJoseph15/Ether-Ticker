@@ -31,6 +31,7 @@
         <item>"BITS"</item>
         <item>"BLK"</item>
         <item>"BLOCK"</item>
+        <item>"BTC"</item>
         <item>"BTCD"</item>
         <item>"BTM"</item>
         <item>"BTS"</item>
@@ -116,7 +117,7 @@
         <item>"VRC"</item>
         <item>"VTC"</item>
         <item>"WDC"</item>
-        <item>"XIA"</item>
+        <item>"XAI"</item>
         <item>"XBC"</item>
         <item>"XC"</item>
         <item>"XCH"</item>
