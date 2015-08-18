@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout"
+        android:id="@+id/linearLayout"
         android:layout_alignLeft="@+id/icon"
         android:layout_alignRight="@+id/price">
 
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/icon"
-        android:layout_below="@+id/relativeLayout"
+        android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ethereum_icon_very_small" />
 

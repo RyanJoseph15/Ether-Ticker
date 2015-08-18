@@ -14,12 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.minisoftwareandgames.ryan.etherticker.objects.Widget;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Properties;
 
 /**
  * Created by ryan on 8/11/15.
@@ -29,6 +31,7 @@ public class SettingsFragment extends Fragment {
     private SQLiteHelper helper;
     private Widget widget;
     private Spinner currencySpinner;
+    private View view;
 
     public SettingsFragment() {}
 
@@ -48,6 +51,7 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_configuration, container, false);
+        this.view = view;
         return view;
     }
 

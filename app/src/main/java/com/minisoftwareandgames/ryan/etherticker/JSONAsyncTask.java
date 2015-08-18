@@ -1,7 +1,13 @@
 package com.minisoftwareandgames.ryan.etherticker;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.minisoftwareandgames.ryan.etherticker.objects.URLandViews;
 import com.minisoftwareandgames.ryan.etherticker.objects.Widget;
@@ -62,6 +68,7 @@ public class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
 				Log.d("etherticker", exchange + " " + currency);
 				switch (exchange) {
 					case "Gatecoin":
+						/* TODO: if this get much bigger, change method to find by name with loop */
 						array = jsono.getJSONArray("tickers");
 						JSONObject ETHBTC = array.getJSONObject(3);
 						JSONObject BTCEUR = array.getJSONObject(0);
@@ -130,8 +137,11 @@ public class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
 				urlAndviews[0].views.setTextViewText(R.id.price, price);
 				urlAndviews[0].views.setTextViewText(R.id.currency, currency);
 				urlAndviews[0].views.setTextViewText(R.id.exchange, exchange);
+				/* progress bar visual */
+				urlAndviews[0].views.setProgressBar(R.id.progressBar, 100, 100, false);
+				urlAndviews[0].views.setViewVisibility(R.id.progressBar, View.GONE);
+				/* update the view */
 				urlAndviews[0].manager.updateAppWidget(urlAndviews[0].widgetId, urlAndviews[0].views);
-
 				return jsono;
 			}
 
@@ -141,6 +151,11 @@ public class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		/* progress bar visual */
+//		urlAndviews[0].views.setProgressBar(R.id.progressBar, 100, 0, false);
+//		urlAndviews[0].views.setViewVisibility(R.id.progressBar, View.GONE);
+//		/* update the view */
+//		urlAndviews[0].manager.updateAppWidget(urlAndviews[0].widgetId, urlAndviews[0].views);
 		return null;
 	}
 

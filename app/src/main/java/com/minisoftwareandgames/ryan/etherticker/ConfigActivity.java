@@ -39,4 +39,10 @@ public class ConfigActivity extends AppCompatActivity {
 		return true;
 	}
 
+	@Override
+	public void onDestroy() {
+		helper.tickerDB.close();
+		super.onDestroy();
+	}
+
 }

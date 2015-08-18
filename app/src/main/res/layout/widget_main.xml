@@ -1,103 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/widget_layout"
-    android:background="#bfffffff"
-    android:gravity="center"
-    android:paddingLeft="@dimen/abc_edit_text_inset_top_material"
-                android:paddingRight="@dimen/abc_edit_text_inset_top_material">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="2"
-        android:id="@+id/relativeLayout">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="low"
-            android:id="@+id/low"
-            android:gravity="center_vertical|left"
-            android:layout_alignParentLeft="true"
-            android:textColor="#e6242a"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="high"
-            android:id="@+id/high"
-            android:gravity="center_vertical|right"
-            android:layout_alignParentRight="true"
-            android:textColor="#23ca25"
-            />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/icon"
-        android:layout_below="@+id/relativeLayout"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ethereum_icon_very_small"
-        android:layout_alignLeft="@+id/relativeLayout" />
-
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
 
     <RelativeLayout
-        android:id="@+id/pricing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/icon"
-        android:layout_alignBottom="@+id/icon"
-        android:layout_alignTop="@+id/icon"
-        android:layout_alignRight="@+id/relativeLayout"
-        android:gravity="center_vertical|right">
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:id="@+id/widget_layout"
+        android:background="#bfffffff"
+        android:gravity="center"
+        android:paddingLeft="@dimen/abc_edit_text_inset_top_material"
+        android:paddingRight="@dimen/abc_edit_text_inset_top_material"
+        >
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:id="@+id/linearLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="low"
+                android:id="@+id/low"
+                android:gravity="center_vertical|left"
+                android:layout_alignParentLeft="true"
+                android:textColor="#e6242a"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="high"
+                android:id="@+id/high"
+                android:gravity="center_vertical|right"
+                android:layout_alignParentRight="true"
+                android:textColor="#23ca25"
+                />
+        </LinearLayout>
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price"
-            android:id="@+id/price"
-            android:gravity="center"
-            android:textSize="@dimen/abc_text_size_title_material"
-            android:textColor="@color/primary_text_default_material_light"
-            android:layout_alignParentLeft="false"
-            android:maxLines="1"/>
+            android:id="@+id/icon"
+            android:layout_below="@+id/linearLayout"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ethereum_icon_very_small"
+            android:layout_alignLeft="@+id/linearLayout" />
+
+
+        <RelativeLayout
+            android:id="@+id/pricing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/icon"
+            android:layout_alignBottom="@+id/icon"
+            android:layout_alignTop="@+id/icon"
+            android:layout_alignRight="@+id/linearLayout"
+            android:gravity="center_vertical|right">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:id="@+id/price"
+                android:gravity="center"
+                android:textSize="@dimen/abc_text_size_title_material"
+                android:textColor="@color/primary_text_default_material_light"
+                android:layout_alignParentLeft="false"
+                android:maxLines="1"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/icon"
+            android:layout_below="@+id/icon"
+            android:layout_alignRight="@+id/pricing">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Exchange"
+                android:id="@+id/exchange"
+                android:gravity="right"
+                android:textColor="@color/primary_text_default_material_light"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CURR"
+                android:id="@+id/currency"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:textColor="@color/primary_text_default_material_light"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                />
+        </RelativeLayout>
+
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/icon"
-        android:layout_below="@+id/icon"
-        android:layout_alignRight="@+id/pricing">
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:id="@+id/progressBar"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Exchange"
-            android:id="@+id/exchange"
-            android:gravity="right"
-            android:textColor="@color/primary_text_default_material_light"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CURR"
-            android:id="@+id/currency"
-            android:gravity="center"
-            android:paddingLeft="6dp"
-            android:textColor="@color/primary_text_default_material_light"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            />
-    </RelativeLayout>
-
-</RelativeLayout>
+</FrameLayout>

@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RemoteViews;
 
 import com.minisoftwareandgames.ryan.etherticker.objects.URLandViews;
@@ -69,6 +71,9 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
             String url = urls.get(exchanges.indexOf(new SQLiteHelper(context).getWidget(widgetId).exchange));
 
             /* perform update */
+
+            views.setProgressBar(R.id.progressBar, 0, 0, false);
+            views.setViewVisibility(R.id.progressBar, View.VISIBLE);
             new JSONAsyncTask().execute(new URLandViews(url, appWidgetManager, widgetId, views, context));
 
             /* update views in case they weren't properly updated in AsyncTask */
