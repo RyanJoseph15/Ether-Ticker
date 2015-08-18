@@ -17,6 +17,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by ryan on 8/14/15.
@@ -26,7 +29,6 @@ public class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-
 	}
 
 	@Override
@@ -54,16 +56,13 @@ public class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
 				String exchange = widget.exchange;
 				String currency = widget.currency;
 				JSONArray array = null;
-				JSONObject object = null;
 				String high = null;
 				String low = null;
 				String price = null;
-//				Log.d("etherticker", exchange + " " + currency);
+				Log.d("etherticker", exchange + " " + currency);
 				switch (exchange) {
 					case "Gatecoin":
 						array = jsono.getJSONArray("tickers");
-//                            String currency = prefs.getString("currency", "BTC");
-                            /* update views */
 						JSONObject ETHBTC = array.getJSONObject(3);
 						JSONObject BTCEUR = array.getJSONObject(0);
 						JSONObject BTCHKD = array.getJSONObject(1);
@@ -71,13 +70,12 @@ public class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
 						JSONObject from = ETHBTC;
 						JSONObject to = BTCUSD;
 						boolean convert = true;
-//						Log.d("etherticker", "async -> currency: " + currency);
 						switch (currency) {
 							case "BTC":
 								convert = false;
-								low = ETHBTC.getString("low");
-								high = ETHBTC.getString("high");
-								price = ETHBTC.getString("open");
+								price = String.format("%07f", Float.valueOf(ETHBTC.getString("open")));
+								low = String.format("%07f", Float.valueOf(ETHBTC.getString("low")));
+								high = String.format("%07f", Float.valueOf(ETHBTC.getString("high")));
 								break;
 							case "HKD":
 								to = BTCHKD;
@@ -93,500 +91,33 @@ public class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
 								break;
 						}
 						if (convert) {
-							low = convert(OPERATION.MULT, from.getString("low"), to.getString("low"));
-							high = convert(OPERATION.MULT, from.getString("high"), to.getString("high"));
-							price = convert(OPERATION.MULT, from.getString("open"), to.getString("open"));
+							price = convert(OP.MULT, from.getString("open"), to.getString("open"));
+							low = convert(OP.MULT, from.getString("low"), to.getString("low"));
+							high = convert(OP.MULT, from.getString("high"), to.getString("high"));
 						}
-//                            Log.d("etherticker", "crunched numbers -> low: " + low + ", high: " + high + ", open: " + price + ", currency: " + currency + ", exchange: " + exchange);
 						break;
 					case "Poloniex":
-//						Log.d("etherticker", "Poloniex selected.");
-						JSONObject BTCETH = jsono.getJSONObject("BTC_ETH");
-						/* BTC ETH goes here */
-//						Log.d("etherticker", "BTCETH.toString() -> " + BTCETH.toString());
-//						JSONObject USDTETH = jsono.getJSONObject("USDT_ETH");
-						from = null;
-						to = BTCETH;
-						convert = true;
-						switch (currency) {
-							case "1CR":
-								JSONObject BTC1CR = jsono.getJSONObject("BTC_1CR");
-								from = BTC1CR;
-								break;
-							case "ABY":
-								JSONObject BTCABY = jsono.getJSONObject("BTC_ABY");
-								from = BTCABY;
-								break;
-							case "ADN":
-								JSONObject BTCADN = jsono.getJSONObject("BTC_ADN");
-								from = BTCADN;
-								break;
-							case "ARCH":
-								JSONObject BTCARCH = jsono.getJSONObject("BTC_ARCH");
-								from = BTCARCH;
-								break;
-							case "BBR":
-								JSONObject BTCBBR = jsono.getJSONObject("BTC_BBR");
-								from = BTCBBR;
-								break;
-							case "BCN":
-								JSONObject BTCBCN = jsono.getJSONObject("BTC_BCN");
-								from = BTCBCN;
-								break;
-							case "BELA":
-								JSONObject BTCBELA = jsono.getJSONObject("BTC_BELA");
-								from = BTCBELA;
-								break;
-							case "BITS":
-								JSONObject BTCBITS = jsono.getJSONObject("BTC_BITS");
-								from = BTCBITS;
-								break;
-							case "BLK":
-								JSONObject BTCBLK = jsono.getJSONObject("BTC_BLK");
-								from = BTCBLK;
-								break;
-							case "BLOCK":
-								JSONObject BTCBLOCK = jsono.getJSONObject("BTC_BLOCK");
-								from = BTCBLOCK;
-								break;
-							case "BTC":
-								convert = false;
-								Log.d("etherticker", "BTCETH.toString() -> " + BTCETH.toString());
-								low = BTCETH.getString("low24hr");
-								high = BTCETH.getString("high24hr");
-								price = BTCETH.getString("last");
-//								low = String.valueOf(1/Float.valueOf(BTCETH.getString("low24hr")));
-//								high = String.valueOf(1 / Float.valueOf(BTCETH.getString("high24hr")));
-//								price = String.valueOf(1 / Float.valueOf(BTCETH.getString("last")));
-								break;
-							case "BTCD":
-								JSONObject BTCBTCD = jsono.getJSONObject("BTC_BTCD");
-								from = BTCBTCD;
-								break;
-							case "BTM":
-								JSONObject BTCBTM = jsono.getJSONObject("BTC_BTM");
-								from = BTCBTM;
-								break;
-							case "BTS":
-								JSONObject BTCBTS = jsono.getJSONObject("BTC_BTS");
-								from = BTCBTS;
-								break;
-							case "BURST":
-								JSONObject BTCBURST = jsono.getJSONObject("BTC_BURST");
-								from = BTCBURST;
-								break;
-							case "C2":
-								JSONObject BTCC2 = jsono.getJSONObject("BTC_C2");
-								from = BTCC2;
-								break;
-							case "CGA":
-								JSONObject BTCCGA = jsono.getJSONObject("BTC_CGA");
-								from = BTCCGA;
-								break;
-							case "CHA":
-								JSONObject BTCCHA = jsono.getJSONObject("BTC_CHA");
-								from = BTCCHA;
-								break;
-							case "CLAM":
-								JSONObject BTCCLAM = jsono.getJSONObject("BTC_CLAM");
-								from = BTCCLAM;
-								break;
-							case "CNMT":
-								JSONObject BTCCNMT = jsono.getJSONObject("BTC_CNMT");
-								from = BTCCNMT;
-								break;
-							case "CURE":
-								JSONObject BTCCURE = jsono.getJSONObject("BTC_CURE");
-								from = BTCCURE;
-								break;
-							case "CYC":
-								JSONObject BTCCYC = jsono.getJSONObject("BTC_CYC");
-								from = BTCCYC;
-								break;
-							case "DASH":
-								JSONObject BTCDASH = jsono.getJSONObject("BTC_DASH");
-								from = BTCDASH;
-								break;
-							case "DGB":
-								JSONObject BTCDGB = jsono.getJSONObject("BTC_DGB");
-								from = BTCDGB;
-								break;
-							case "DIEM":
-								JSONObject BTCDIEM = jsono.getJSONObject("BTC_DIEM");
-								from = BTCDIEM;
-								break;
-							case "DOGE":
-								JSONObject BTCDOGE = jsono.getJSONObject("BTC_DOGE");
-								from = BTCDOGE;
-								break;
-							case "EMC2":
-								JSONObject BTCEMC2 = jsono.getJSONObject("BTC_EMC2");
-								from = BTCEMC2;
-								break;
-							case "EXE":
-								JSONObject BTCEXE = jsono.getJSONObject("BTC_EXE");
-								from = BTCEXE;
-								break;
-							case "FIBRE":
-								JSONObject BTCFIBRE = jsono.getJSONObject("BTC_FIBRE");
-								from = BTCFIBRE;
-								break;
-							case "FLDC":
-								JSONObject BTCFLDC = jsono.getJSONObject("BTC_FLDC");
-								from = BTCFLDC;
-								break;
-							case "FLO":
-								JSONObject BTCFLO = jsono.getJSONObject("BTC_FLO");
-								from = BTCFLO;
-								break;
-							case "FLT":
-								JSONObject BTCFLT = jsono.getJSONObject("BTC_FLT");
-								from = BTCFLT;
-								break;
-							case "GAP":
-								JSONObject BTCGAP = jsono.getJSONObject("BTC_GAP");
-								from = BTCGAP;
-								break;
-							case "GEMZ":
-								JSONObject BTCGEMZ = jsono.getJSONObject("BTC_GEMZ");
-								from = BTCGEMZ;
-								break;
-							case "GEO":
-								JSONObject BTCGEO = jsono.getJSONObject("BTC_GEO");
-								from = BTCGEO;
-								break;
-							case "GMC":
-								JSONObject BTCGMC = jsono.getJSONObject("BTC_GMC");
-								from = BTCGMC;
-								break;
-							case "GRC":
-								JSONObject BTCGRC = jsono.getJSONObject("BTC_GRC");
-								from = BTCGRC;
-								break;
-							case "GRS":
-								JSONObject BTCGRS = jsono.getJSONObject("BTC_GRS");
-								from = BTCGRS;
-								break;
-							case "HIRO":
-								JSONObject BTCHIRO = jsono.getJSONObject("BTC_HIRO");
-								from = BTCHIRO;
-								break;
-							case "HUC":
-								JSONObject BTCHUC = jsono.getJSONObject("BTC_HUC");
-								from = BTCHUC;
-								break;
-							case "HUGE":
-								JSONObject BTCHUGE = jsono.getJSONObject("BTC_HUGE");
-								from = BTCHUGE;
-								break;
-							case "HYP":
-								JSONObject BTCHYP = jsono.getJSONObject("BTC_HYP");
-								from = BTCHYP;
-								break;
-							case "HZ":
-								JSONObject BTCHZ = jsono.getJSONObject("BTC_HZ");
-								from = BTCHZ;
-								break;
-							case "JLH":
-								JSONObject BTCJLH = jsono.getJSONObject("BTC_JLH");
-								from = BTCJLH;
-								break;
-							case "LQD":
-								JSONObject BTCLQD = jsono.getJSONObject("BTC_LQD");
-								from = BTCLQD;
-								break;
-							case "LTBC":
-								JSONObject BTCLTBC = jsono.getJSONObject("BTC_LTBC");
-								from = BTCLTBC;
-								break;
-							case "LTC":
-								JSONObject BTCLTC = jsono.getJSONObject("BTC_LTC");
-								from = BTCLTC;
-								break;
-							case "MAID":
-								JSONObject BTCMAID = jsono.getJSONObject("BTC_MAID");
-								from = BTCMAID;
-								break;
-							case "MCN":
-								JSONObject BTCMCN = jsono.getJSONObject("BTC_MCN");
-								from = BTCMCN;
-								break;
-							case "MIL":
-								JSONObject BTCMIL = jsono.getJSONObject("BTC_MIL");
-								from = BTCMIL;
-								break;
-							case "MINT":
-								JSONObject BTCMINT = jsono.getJSONObject("BTC_MINT");
-								from = BTCMINT;
-								break;
-							case "MMC":
-								JSONObject BTCMMC = jsono.getJSONObject("BTC_MMC");
-								from = BTCMMC;
-								break;
-							case "MMNXT":
-								JSONObject BTCMMNXT = jsono.getJSONObject("BTC_MMNXT");
-								from = BTCMMNXT;
-								break;
-							case "MRS":
-								JSONObject BTCMRS = jsono.getJSONObject("BTC_MRS");
-								from = BTCMRS;
-								break;
-							case "MSC":
-								JSONObject BTCMSC = jsono.getJSONObject("BTC_MSC");
-								from = BTCMSC;
-								break;
-							case "MYR":
-								JSONObject BTCMYR = jsono.getJSONObject("BTC_MYR");
-								from = BTCMYR;
-								break;
-							case "NAUT":
-								JSONObject BTCNAUT = jsono.getJSONObject("BTC_NAUT");
-								from = BTCNAUT;
-								break;
-							case "NAV":
-								JSONObject BTCNAV = jsono.getJSONObject("BTC_NAV");
-								from = BTCNAV;
-								break;
-							case "NBT":
-								JSONObject BTCNBT = jsono.getJSONObject("BTC_NBT");
-								from = BTCNBT;
-								break;
-							case "NEOS":
-								JSONObject BTCNEOS = jsono.getJSONObject("BTC_NEOS");
-								from = BTCNEOS;
-								break;
-							case "NMC":
-								JSONObject BTCNMC = jsono.getJSONObject("BTC_NMC");
-								from = BTCNMC;
-								break;
-							case "NOBL":
-								JSONObject BTCNOBL = jsono.getJSONObject("BTC_NOBL");
-								from = BTCNOBL;
-								break;
-							case "NOTE":
-								JSONObject BTCNOTE = jsono.getJSONObject("BTC_NOTE");
-								from = BTCNOTE;
-								break;
-							case "NOXT":
-								JSONObject BTCNOXT = jsono.getJSONObject("BTC_NOXT");
-								from = BTCNOXT;
-								break;
-							case "NSR":
-								JSONObject BTCNSR = jsono.getJSONObject("BTC_NSR");
-								from = BTCNSR;
-								break;
-							case "NXT":
-								JSONObject BTCNXT = jsono.getJSONObject("BTC_NXT");
-								from = BTCNXT;
-								break;
-							case "NXTI":
-								JSONObject BTCNXTI = jsono.getJSONObject("BTC_NXTI");
-								from = BTCNXTI;
-								break;
-							case "OPAL":
-								JSONObject BTCOPAL = jsono.getJSONObject("BTC_OPAL");
-								from = BTCOPAL;
-								break;
-							case "PIGGY":
-								JSONObject BTCPIGGY = jsono.getJSONObject("BTC_PIGGY");
-								from = BTCPIGGY;
-								break;
-							case "PINK":
-								JSONObject BTCPINK = jsono.getJSONObject("BTC_PINK");
-								from = BTCPINK;
-								break;
-							case "POT":
-								JSONObject BTCPOT = jsono.getJSONObject("BTC_POT");
-								from = BTCPOT;
-								break;
-							case "PPC":
-								JSONObject BTCPPC = jsono.getJSONObject("BTC_PPC");
-								from = BTCPPC;
-								break;
-							case "PRC":
-								JSONObject BTCPRC = jsono.getJSONObject("BTC_PRC");
-								from = BTCPRC;
-								break;
-							case "PTS":
-								JSONObject BTCPTS = jsono.getJSONObject("BTC_PTS");
-								from = BTCPTS;
-								break;
-							case "QBK":
-								JSONObject BTCQBK = jsono.getJSONObject("BTC_QBK");
-								from = BTCQBK;
-								break;
-							case "QORA":
-								JSONObject BTQORA = jsono.getJSONObject("BTC_QORA");
-								from = BTQORA;
-								break;
-							case "QTL":
-								JSONObject BTCQTL = jsono.getJSONObject("BTC_QTL");
-								from = BTCQTL;
-								break;
-							case "RBY":
-								JSONObject BTCRBY = jsono.getJSONObject("BTC_RBY");
-								from = BTCRBY;
-								break;
-							case "RDD":
-								JSONObject BTCRDD = jsono.getJSONObject("BTC_RDD");
-								from = BTCRDD;
-								break;
-							case "RIC":
-								JSONObject BTCRIC = jsono.getJSONObject("BTC_RIC");
-								from = BTCRIC;
-								break;
-							case "SDC":
-								JSONObject BTCSDC = jsono.getJSONObject("BTC_SDC");
-								from = BTCSDC;
-								break;
-							case "SILK":
-								JSONObject BTCSILK = jsono.getJSONObject("BTC_SILK");
-								from = BTCSILK;
-								break;
-							case "SJCX":
-								JSONObject BTCSJCX = jsono.getJSONObject("BTC_SJCX");
-								from = BTCSJCX;
-								break;
-							case "STR":
-								JSONObject BTCSTR = jsono.getJSONObject("BTC_STR");
-								from = BTCSTR;
-								break;
-							case "SWARM":
-								JSONObject BTCSWARM = jsono.getJSONObject("BTC_SWARM");
-								from = BTCSWARM;
-								break;
-							case "SYNC":
-								JSONObject BTCSYNC = jsono.getJSONObject("BTC_SYNC");
-								from = BTCSYNC;
-								break;
-							case "SYS":
-								JSONObject BTCSYS = jsono.getJSONObject("BTC_SYS");
-								from = BTCSYS;
-								break;
-							case "UIS":
-								JSONObject BTCUIS = jsono.getJSONObject("BTC_UIS");
-								from = BTCUIS;
-								break;
-							case "UNITY":
-								JSONObject BTCUNITY = jsono.getJSONObject("BTC_UNITY");
-								from = BTCUNITY;
-								break;
-							case "URO":
-								JSONObject BTCURO = jsono.getJSONObject("BTC_URO");
-								from = BTCURO;
-								break;
-							case "USDT":
-								JSONObject BTCUSDT = jsono.getJSONObject("BTC_USDT");
-								from = BTCUSDT;
-								break;
-							case "VIA":
-								JSONObject BTCVIA = jsono.getJSONObject("BTC_VIA");
-								from = BTCVIA;
-								break;
-							case "VNL":
-								JSONObject BTCVNL = jsono.getJSONObject("BTC_VNL");
-								from = BTCVNL;
-								break;
-							case "VRC":
-								JSONObject BTCVRC = jsono.getJSONObject("BTC_VRC");
-								from = BTCVRC;
-								break;
-							case "VTC":
-								JSONObject BTCVTC = jsono.getJSONObject("BTC_VTC");
-								from = BTCVTC;
-								break;
-							case "WDC":
-								JSONObject BTCWDC = jsono.getJSONObject("BTC_WDC");
-								from = BTCWDC;
-								break;
-							case "XAI":
-								JSONObject BTCXAI = jsono.getJSONObject("BTC_XAI");
-								from = BTCXAI;
-								break;
-							case "XBC":
-								JSONObject BTCXBC = jsono.getJSONObject("BTC_XBC");
-								from = BTCXBC;
-								break;
-							case "XC":
-								JSONObject BTCXC = jsono.getJSONObject("BTC_XC");
-								from = BTCXC;
-								break;
-							case "XCH":
-								JSONObject BTCXCH = jsono.getJSONObject("BTC_XCH");
-								from = BTCXCH;
-								break;
-							case "XCN":
-								JSONObject BTCXCN = jsono.getJSONObject("BTC_XCN");
-								from = BTCXCN;
-								break;
-							case "XCP":
-								JSONObject BTCXCP = jsono.getJSONObject("BTC_XCP");
-								from = BTCXCP;
-								break;
-							case "XCR":
-								JSONObject BTCXCR = jsono.getJSONObject("BTC_XCR");
-								from = BTCXCR;
-								break;
-							case "XDN":
-								JSONObject BTCXDN = jsono.getJSONObject("BTC_XDN");
-								from = BTCXDN;
-								break;
-							case "XDP":
-								JSONObject BTCXDP = jsono.getJSONObject("BTC_XDP");
-								from = BTCXDP;
-								break;
-							case "XEM":
-								JSONObject BTCXEM = jsono.getJSONObject("BTC_XEM");
-								from = BTCXEM;
-								break;
-							case "XMG":
-								JSONObject BTCXMG = jsono.getJSONObject("BTC_XMG");
-								from = BTCXMG;
-								break;
-							case "XMR":
-								JSONObject BTCXMR = jsono.getJSONObject("BTC_XMR");
-								from = BTCXMR;
-								break;
-							case "XPB":
-								JSONObject BTCXPB = jsono.getJSONObject("BTC_XPB");
-								from = BTCXPB;
-								break;
-							case "XPM":
-								JSONObject BTCXPM = jsono.getJSONObject("BTC_XPM");
-								from = BTCXPM;
-								break;
-							case "XRP":
-								JSONObject BTCXRP = jsono.getJSONObject("BTC_XRP");
-								from = BTCXRP;
-								break;
-							case "XST":
-								JSONObject BTCXST = jsono.getJSONObject("BTC_XST");
-								from = BTCXST;
-								break;
-							case "XUSD":
-								JSONObject BTCXUSD = jsono.getJSONObject("BTC_XUSD");
-								from = BTCXUSD;
-								break;
-							case "YACC":
-								JSONObject BTCYACC = jsono.getJSONObject("BTC_YACC");
-								from = BTCYACC;
-								break;
-							case "IOC":
-								JSONObject BTCIOC = jsono.getJSONObject("BTC_IOC");
-								from = BTCIOC;
-								break;
-							case "INDEX":
-								JSONObject BTCINDEX = jsono.getJSONObject("BTC_INDEX");
-								from = BTCINDEX;
-								break;
-							default:
-								Log.d("etherticker", "switch(currency) is null");
-								break;
-						}
-						if (convert) {
-							low = convert(OPERATION.DIV, from.getString("low24hr"), to.getString("low24hr"));
-							high = convert(OPERATION.DIV, from.getString("high24hr"), to.getString("high24hr"));
-							price = convert(OPERATION.DIV, from.getString("last"), to.getString("last"));
+						int id = R.array.poloniex_currency_array;
+						JSONObject base = jsono.getJSONObject("BTC_ETH");
+						String name = null;
+						if (currency.equals("BTC")) {
+							price = String.format("%07f", Float.valueOf(base.getString("last")));
+							low = String.format("%07f", Float.valueOf(base.getString("low24hr")));
+							high = String.format("%07f", Float.valueOf(base.getString("high24hr")));
+						} else {
+							name = "BTC_" + currency;
+							from = jsono.getJSONObject(name);
+							Log.d("etherticker", base.toString());
+							Log.d("etherticker", from.toString());
+							if (from.getString("isFrozen").equals("0")) {
+								price = convert(OP.DIV, from.getString("last"), base.getString("last"));
+								low = convert(OP.DIV, from.getString("low24hr"), base.getString("last"));
+								high = convert(OP.DIV, from.getString("high24hr"), base.getString("last"));
+							} else {
+								low = "0.0";
+								high = low;
+								price = "FROZEN";
+							}
 						}
 						break;
 					default:
@@ -617,11 +148,17 @@ public class JSONAsyncTask extends AsyncTask<URLandViews, Void, JSONObject> {
             /* eh */
 	}
 
-	private String convert(OPERATION op, String from, String to) {
-		if (op == OPERATION.MULT)
-			return String.valueOf(Float.valueOf(from) * Float.valueOf(to));
-		else return String.valueOf(Float.valueOf(from) / Float.valueOf(to));
+	private String convert(OP op, String first, String second) {
+		if (op == OP.MULT)
+			return String.format("%.07f", Float.valueOf(first) * Float.valueOf(second));
+		else return String.format("%.07f", Float.valueOf(first) / Float.valueOf(second));
 	}
 
-	private enum OPERATION {MULT, DIV}
+	private String getRatio(String first, String second) {
+		/* inverse each to get value per shared currency (BTC), then divide first by second. */
+		return String.valueOf(Float.valueOf(first)/Float.valueOf(second));
+	}
+
+	private enum OP {MULT, DIV}
+
 }
