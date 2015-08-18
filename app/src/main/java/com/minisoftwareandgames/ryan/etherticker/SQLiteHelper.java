@@ -13,6 +13,7 @@ import com.minisoftwareandgames.ryan.etherticker.objects.Widget;
  * Created by ryan on 8/14/15.
  */
 public class SQLiteHelper extends SQLiteOpenHelper {
+	/* TODO: fix DB leak errors */
 
 	private Context context;
 	public String DEFAULT_EXCHANGE = "Gatecoin";
@@ -76,8 +77,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			String exchange = cursor.getString(cursor.getColumnIndex(COLUMN_EXCHANGE));
 			String currency = cursor.getString(cursor.getColumnIndex(COLUMN_CURRENCY));
 //			Log.d("etherticker", id + " " + exchange + " " + currency);
+			cursor.close();
 			return new Widget(id, exchange, currency);
 		}
+		cursor.close();
 		/* if there is not a widget with matching id, create one */
 		Widget widget = new Widget(wId, DEFAULT_EXCHANGE, DEFAULT_CURRENCY);
 		if (addWidget(widget)) {	/* and add it */
@@ -88,7 +91,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public boolean hasWidgets() {
 		tickerDB = getReadableDatabase();
 		Cursor cursor = tickerDB.rawQuery("SELECT * FROM " + TABLE_WIDGETS, null);
-		return cursor.moveToFirst();	// if there is one, it will be true
+		boolean val = cursor.moveToFirst();	// if there is one, it will be true
+		cursor.close();
+		return val;
 	}
 
 	public boolean updateWidget(Widget widget) {
@@ -112,6 +117,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				Log.d("etherticker", id + " " + exchange + " " + currency);
 			} while (cursor.moveToNext());
 		}
+		cursor.close();
 	}
 
 }
