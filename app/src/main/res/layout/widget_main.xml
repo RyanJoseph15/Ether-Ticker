@@ -19,7 +19,8 @@
             android:id="@+id/low"
             android:gravity="center_vertical|left"
             android:layout_alignParentLeft="true"
-            android:textColor="#e6242a" />
+            android:textColor="#e6242a"
+            android:maxLines="1"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +29,8 @@
             android:id="@+id/high"
             android:gravity="center_vertical|right"
             android:layout_alignParentRight="true"
-            android:textColor="#23ca25" />
+            android:textColor="#23ca25"
+            android:maxLines="1"/>
     </RelativeLayout>
 
     <ImageView
@@ -61,7 +63,7 @@
             android:textSize="@dimen/abc_text_size_title_material"
             android:textColor="@color/primary_text_default_material_light"
             android:layout_alignParentLeft="false"
-            />
+            android:maxLines="1"/>
 
     </RelativeLayout>
 
@@ -85,7 +87,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="currency"
+            android:text="CURR"
             android:id="@+id/currency"
             android:gravity="center"
             android:paddingLeft="6dp"

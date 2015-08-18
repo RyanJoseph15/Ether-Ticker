@@ -5,6 +5,6 @@
     android:minHeight="72dp"
     android:updatePeriodMillis="1800000"
     android:initialLayout="@layout/widget_main"
-    android:previewImage="@drawable/ethereum_icon_very_very_small">
+    android:previewImage="@drawable/etherticker512">
 
 </appwidget-provider>
