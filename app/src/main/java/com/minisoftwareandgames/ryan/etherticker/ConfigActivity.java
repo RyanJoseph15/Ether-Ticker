@@ -41,6 +41,7 @@ public class ConfigActivity extends AppCompatActivity {
 
 	@Override
 	public void onDestroy() {
+		/* keeps the data from leaking */
 		helper.tickerDB.close();
 		super.onDestroy();
 	}
