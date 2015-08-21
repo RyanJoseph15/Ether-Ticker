@@ -15,6 +15,7 @@ import com.minisoftwareandgames.ryan.etherticker.ConfigActivity;
 import com.minisoftwareandgames.ryan.etherticker.JSONAsyncTask;
 import com.minisoftwareandgames.ryan.etherticker.R;
 import com.minisoftwareandgames.ryan.etherticker.SQLiteHelper;
+import com.minisoftwareandgames.ryan.etherticker.SettingsFragment;
 import com.minisoftwareandgames.ryan.etherticker.objects.URLandViews;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
     String id = "://etherwidget/id/";
     int layout = 0;
     Class<EtherTickerWidgetProvider> ETWPclass;
+    int widgetId = 0;
 
     public void setUp(String id, Class ETWPclass, int layout) {
         this.id = id;
@@ -36,8 +38,17 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
     }
 
     @Override
+    public void onReceive(Context context, Intent intent)
+    {
+        super.onReceive(context, intent);
+        this.widgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
+        Log.d("etherticker", widgetId + "");
+    }
+
+    @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.d("etherticker", "onUpdate()");
+
         ComponentName widget = new ComponentName(context, ETWPclass);
         int[] widgetIds = appWidgetManager.getAppWidgetIds(widget);
 
