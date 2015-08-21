@@ -103,6 +103,7 @@ public class SettingsFragment extends Fragment {
             intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
             int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), clas));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widget.id);
             getActivity().sendBroadcast(intent);
             return true;
         }
@@ -131,6 +132,7 @@ public class SettingsFragment extends Fragment {
             // since it seems the onUpdate() is only fired on that:
             int[] ids = AppWidgetManager.getInstance(getActivity().getApplication()).getAppWidgetIds(new ComponentName(getActivity().getApplication(), clas));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widget.id);
             getActivity().sendBroadcast(intent);
         }
 
