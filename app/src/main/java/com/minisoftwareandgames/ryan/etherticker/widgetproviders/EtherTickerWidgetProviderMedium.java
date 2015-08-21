@@ -10,12 +10,12 @@ import com.minisoftwareandgames.ryan.etherticker.R;
  * Created by ryan on 8/12/15.
  */
 public class EtherTickerWidgetProviderMedium extends EtherTickerWidgetProvider {
-
-    @Override
-    public void onReceive(Context context, Intent intent)
-    {
-        super.onReceive(context, intent);
-    }
+//
+//    @Override
+//    public void onReceive(Context context, Intent intent)
+//    {
+//        super.onReceive(context, intent);
+//    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {

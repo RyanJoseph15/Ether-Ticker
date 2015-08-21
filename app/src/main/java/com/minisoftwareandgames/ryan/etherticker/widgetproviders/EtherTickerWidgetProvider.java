@@ -29,21 +29,21 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
     String id = "://etherwidget/id/";
     int layout = 0;
     Class<EtherTickerWidgetProvider> ETWPclass;
-    int widgetId = 0;
+//    int widgetId = 0;
 
     public void setUp(String id, Class ETWPclass, int layout) {
         this.id = id;
         this.ETWPclass = ETWPclass;
         this.layout = layout;
     }
-
-    @Override
-    public void onReceive(Context context, Intent intent)
-    {
-        super.onReceive(context, intent);
-        this.widgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
-        Log.d("etherticker", widgetId + "");
-    }
+//
+//    @Override
+//    public void onReceive(Context context, Intent intent)
+//    {
+//        super.onReceive(context, intent);
+//        this.widgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
+//        Log.d("etherticker", widgetId + "");
+//    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
