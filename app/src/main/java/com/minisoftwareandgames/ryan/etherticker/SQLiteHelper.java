@@ -56,7 +56,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	}
 
 	public boolean addWidget(Widget widget) {
-		Log.d("addWidget", "start");
+		Log.d("etherticker", "addWidget");
 		tickerDB = getWritableDatabase();
 		ContentValues cv = new ContentValues();
 		cv.put(COLUMN_ID, widget.id);
@@ -66,22 +66,32 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 		return (val > 0);	// implies success
 	}
 
+	public boolean deleteWidget(int id) {
+		Log.d("etherticker", "deleteWidget");
+		tickerDB = getWritableDatabase();
+		int val = tickerDB.delete(TABLE_WIDGETS, COLUMN_ID + " = ?", new String[] {String.valueOf(id)});
+		return (val > 0);	// implies success
+	}
+
 	public Widget getWidget(int wId) {
 		Log.d("getWidget", "start");
 		tickerDB = getReadableDatabase();
 		String statement = "SELECT * FROM " + TABLE_WIDGETS + " WHERE " + COLUMN_ID + " = " + wId + "";
 //		Log.d("etherticker", statement);
 		Cursor cursor = tickerDB.rawQuery(statement, null);
-		if (cursor.moveToFirst()) {	/* there should only be one: ids are unique */
-			int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
-			String exchange = cursor.getString(cursor.getColumnIndex(COLUMN_EXCHANGE));
-			String currency = cursor.getString(cursor.getColumnIndex(COLUMN_CURRENCY));
+		try {
+			if (cursor.moveToFirst()) {	/* there should only be one: ids are unique */
+				int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+				String exchange = cursor.getString(cursor.getColumnIndex(COLUMN_EXCHANGE));
+				String currency = cursor.getString(cursor.getColumnIndex(COLUMN_CURRENCY));
 //			Log.d("etherticker", id + " " + exchange + " " + currency);
+				cursor.close();
+				return new Widget(id, exchange, currency);
+			}
+		} finally {
 			cursor.close();
-			return new Widget(id, exchange, currency);
 		}
-		cursor.close();
-		/* if there is not a widget12 with matching id, create one */
+		/* if there is not a widget21 with matching id, create one */
 		Widget widget = new Widget(wId, DEFAULT_EXCHANGE, DEFAULT_CURRENCY);
 		if (addWidget(widget)) {	/* and add it */
 			return widget;	/* if successfully in DB, return it */
@@ -91,8 +101,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	public boolean hasWidgets() {
 		tickerDB = getReadableDatabase();
 		Cursor cursor = tickerDB.rawQuery("SELECT * FROM " + TABLE_WIDGETS, null);
-		boolean val = cursor.moveToFirst();	// if there is one, it will be true
-		cursor.close();
+		boolean val = false;
+		try {
+			val = cursor.moveToFirst();    // if there is one, it will be true
+		} finally {
+			cursor.close();
+		}
 		return val;
 	}
 
@@ -106,18 +120,22 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	}
 
 	private void printDB() {
+		/* for debugging purposes */
 		tickerDB = getReadableDatabase();
 		Cursor cursor = tickerDB.rawQuery("SELECT * FROM " + TABLE_WIDGETS, null);
-		Log.d("etherticker", "-id- | -exchange- | -currency-");
-		if (cursor.moveToFirst()) {
-			do {
-				int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
-				String exchange = cursor.getString(cursor.getColumnIndex(COLUMN_EXCHANGE));
-				String currency = cursor.getString(cursor.getColumnIndex(COLUMN_CURRENCY));
-				Log.d("etherticker", id + " " + exchange + " " + currency);
-			} while (cursor.moveToNext());
+		try {
+			Log.d("etherticker", "-id- | -exchange- | -currency-");
+			if (cursor.moveToFirst()) {
+				do {
+					int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+					String exchange = cursor.getString(cursor.getColumnIndex(COLUMN_EXCHANGE));
+					String currency = cursor.getString(cursor.getColumnIndex(COLUMN_CURRENCY));
+					Log.d("etherticker", id + " " + exchange + " " + currency);
+				} while (cursor.moveToNext());
+			}
+		} finally {
+			cursor.close();
 		}
-		cursor.close();
 	}
 
 }
