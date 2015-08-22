@@ -1,0 +1,7 @@
+<resources>
+    <string name="exchange">Échange</string>
+    <string name="currency">Devise</string>
+    <string name="app_name">Ether Ticker</string>
+    <string name="action_settings">Paramètres</string>
+
+</resources>

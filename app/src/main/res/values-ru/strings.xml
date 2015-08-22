@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="currency">валюта</string>
+    <string name="exchange">обмен</string>
+    <string name="app_name">Ether Ticker</string>
+    <string name="action_settings">настройки</string>
+
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="exchange">交換</string>
+    <string name="currency">カレンシー</string>
+    <string name="app_name">エーテルティッカー</string>
+    <string name="action_settings">[設定]</string>
+
+</resources>
