@@ -87,7 +87,7 @@ public class SettingsFragment extends Fragment {
             }
         } else {
             /* no active widgets */
-//            Log.d("etherticker", "no widget12 or null helper");
+//            Log.d("etherticker", "no widget21 or null helper");
         }
 
     }

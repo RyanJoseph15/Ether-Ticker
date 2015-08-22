@@ -47,6 +47,8 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        /* TODO: onUpdate is being called way too frequently, I think there is an issue with how the id's are being handled.
+         * TODO: however, it doesn't seem to cause any performance issues... right now */
         Log.d("etherticker", "onUpdate()");
 
         ComponentName widget = new ComponentName(context, ETWPclass);
@@ -56,7 +58,7 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
         for (int widgetId : widgetIds) {
             Intent intent = new Intent(context, ConfigActivity.class);
 
-            /* make the widget12 id's actually unique */
+            /* make the widget21 id's actually unique */
             Uri data = Uri.withAppendedPath(
                     Uri.parse("etherticker" + id)
                     ,String.valueOf(widgetId));
@@ -70,7 +72,7 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
 
 //            Log.d("etherticker", "Provider: " + widgetId);
 
-            /* reference for the views associated with the widget12 */
+            /* reference for the views associated with the widget21 */
             RemoteViews views = new RemoteViews(context.getPackageName(), layout);
             views.setOnClickPendingIntent(R.id.widget_layout, pIntent);
 
@@ -89,6 +91,15 @@ public class EtherTickerWidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(widgetId, views);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
+    }
+
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds) {
+        super.onDeleted(context, appWidgetIds);
+        SQLiteHelper helper = new SQLiteHelper(context);
+        for (int id : appWidgetIds) {
+            helper.deleteWidget(id);
+        }
     }
 
 }

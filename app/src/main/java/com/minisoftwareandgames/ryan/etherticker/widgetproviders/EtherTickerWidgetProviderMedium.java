@@ -2,7 +2,6 @@ package com.minisoftwareandgames.ryan.etherticker.widgetproviders;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import com.minisoftwareandgames.ryan.etherticker.R;
 
@@ -20,7 +19,7 @@ public class EtherTickerWidgetProviderMedium extends EtherTickerWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.d("ethertickerMedium", "onUpdate()");
-        setUp("://widget12/id/", EtherTickerWidgetProviderMedium.class, R.layout.widget12);
+        setUp("://widget21/id/", EtherTickerWidgetProviderMedium.class, R.layout.widget21);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
